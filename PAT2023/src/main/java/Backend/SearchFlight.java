@@ -4,22 +4,38 @@
  */
 package Backend;
 
-import java.io.File;
+
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Scanner;
+
 
 /**
  *
  * @author Adnaa
  */
 public class SearchFlight {
-     {
+    
+    
+   
+   
+    
+    public String flights (String departure, String arrival, int day, int month, int year) throws FileNotFoundException, IOException {
+      String flight = departure + arrival + day + month + year;
+      
+        return flight;
+        
+        
+        
+      
+      
+    }
+    
+    
+     
       
         
                
-    }
+    
     
     
 }

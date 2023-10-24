@@ -5,12 +5,20 @@
 package UI;
 
 import Backend.SearchFlight;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Adnaa
  */
 public class FlightSearch extends javax.swing.JFrame {
+    
 
     /**
      * Creates new form FlightSearch
@@ -40,10 +48,10 @@ public class FlightSearch extends javax.swing.JFrame {
         Year = new javax.swing.JComboBox<>();
         Search_But = new javax.swing.JButton();
         returnFromSearch = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        FlightTable = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         ChooseFlight = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        FlightTable = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -60,12 +68,10 @@ public class FlightSearch extends javax.swing.JFrame {
         Departure_Box.setBackground(new java.awt.Color(204, 204, 255));
         Departure_Box.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         Departure_Box.setForeground(new java.awt.Color(0, 0, 0));
-        Departure_Box.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "King shaka int.[FALE]", "Item 2", "Item 3", "Item 4" }));
 
         arrival_Box.setBackground(new java.awt.Color(204, 204, 255));
         arrival_Box.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         arrival_Box.setForeground(new java.awt.Color(0, 0, 0));
-        arrival_Box.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "heathrow int. [EGLL]", "Item 2", "Item 3", "Item 4" }));
         arrival_Box.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 arrival_BoxActionPerformed(evt);
@@ -83,20 +89,17 @@ public class FlightSearch extends javax.swing.JFrame {
 
         days.setBackground(new java.awt.Color(204, 204, 255));
         days.setForeground(new java.awt.Color(0, 0, 0));
-        days.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01", "Item 2", "Item 3", "Item 4" }));
 
         Month.setBackground(new java.awt.Color(204, 204, 255));
         Month.setForeground(new java.awt.Color(0, 0, 0));
-        Month.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01", "Item 2", "Item 3", "Item 4" }));
 
         Year.setBackground(new java.awt.Color(204, 204, 255));
         Year.setForeground(new java.awt.Color(0, 0, 0));
-        Year.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2023", "Item 2", "Item 3", "Item 4" }));
 
         Search_But.setBackground(new java.awt.Color(204, 204, 255));
         Search_But.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         Search_But.setForeground(new java.awt.Color(0, 0, 0));
-        Search_But.setText("Search flights");
+        Search_But.setText("Search for your flight");
         Search_But.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Search_ButActionPerformed(evt);
@@ -106,23 +109,6 @@ public class FlightSearch extends javax.swing.JFrame {
         returnFromSearch.setBackground(new java.awt.Color(204, 204, 255));
         returnFromSearch.setText("return to menu");
 
-        FlightTable.setBackground(new java.awt.Color(255, 255, 255));
-        FlightTable.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        FlightTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        FlightTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jScrollPane1.setViewportView(FlightTable);
-        FlightTable.getAccessibleContext().setAccessibleName("");
-
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setText("Flights will show up here:");
 
@@ -130,6 +116,15 @@ public class FlightSearch extends javax.swing.JFrame {
         ChooseFlight.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         ChooseFlight.setForeground(new java.awt.Color(0, 0, 0));
         ChooseFlight.setText("Choose Flight");
+        ChooseFlight.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ChooseFlightActionPerformed(evt);
+            }
+        });
+
+        jScrollPane2.setName(""); // NOI18N
+
+        jScrollPane2.setViewportView(FlightTable);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -137,11 +132,23 @@ public class FlightSearch extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 207, Short.MAX_VALUE)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 632, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(142, 142, 142))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGap(81, 81, 81)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(81, 81, 81)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(Departure_Box, 0, 294, Short.MAX_VALUE)
+                                            .addComponent(arrival_Box, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(6, 6, 6)
                                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -151,27 +158,19 @@ public class FlightSearch extends javax.swing.JFrame {
                                         .addComponent(Month, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(Year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(11, 11, 11))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(Search_But)
-                                        .addGap(67, 67, 67)))
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 564, Short.MAX_VALUE))
+                                        .addGap(11, 11, 11))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(79, 79, 79)
+                                .addComponent(Search_But, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(105, 105, 105)
+                                .addComponent(jLabel3)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(Departure_Box, 0, 294, Short.MAX_VALUE)
-                                            .addComponent(arrival_Box, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel3))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 632, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(142, 142, 142))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(46, 46, 46))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(returnFromSearch)))
@@ -179,38 +178,43 @@ public class FlightSearch extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(ChooseFlight, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(179, 179, 179))
+                .addGap(145, 145, 145))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(returnFromSearch)
-                .addGap(44, 44, 44)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Departure_Box, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(11, 11, 11)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(arrival_Box, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Departure_Box, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addGap(11, 11, 11))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(arrival_Box, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(days, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(Month, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(Year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(Search_But, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(50, 50, 50)
+                        .addComponent(Search_But, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ChooseFlight, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(177, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -218,7 +222,7 @@ public class FlightSearch extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(15, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
@@ -232,13 +236,59 @@ public class FlightSearch extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void Search_ButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Search_ButActionPerformed
-        String departure = Departure_Box.getItemAt(WIDTH);
+    
+    
+        try {
+            String departure = Departure_Box.getSelectedItem() + "";
+            String arrival = arrival_Box.getSelectedItem() + "";
+            String day = days.getSelectedItem() + "";
+            String month = Month.getSelectedItem() + "";
+            String year = Year.getSelectedItem() + "";
+            
+            File fli = new File("data//Flights.txt");
+            Scanner scFli = new Scanner(fli).useDelimiter("#");
+            
+            
+            while (scFli.hasNext()) {
+                if (scFli.next().equals(departure + arrival + day + month + year) ) {
+                    String newFlight = departure + arrival + day + month + year;
+                    FlightTable.add(newFlight, FlightTable);
+                    
+                }
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(FlightSearch.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+        
+               
         
     }//GEN-LAST:event_Search_ButActionPerformed
 
     private void arrival_BoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_arrival_BoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_arrival_BoxActionPerformed
+
+    private void ChooseFlightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChooseFlightActionPerformed
+       
+        try {
+            File Book = new File("data//Paying.txt");
+            FileWriter bokWrite = new FileWriter(Book, true);
+            
+            String chosenFlight = FlightTable.getSelectedValue();
+            
+            bokWrite.write(chosenFlight);
+            new payment().setVisible(true);
+        } catch (IOException ex) {
+            Logger.getLogger(FlightSearch.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+       
+        
+        
+        
+        
+    }//GEN-LAST:event_ChooseFlightActionPerformed
 
     /**
      * @param args the command line arguments
@@ -278,7 +328,7 @@ public class FlightSearch extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ChooseFlight;
     private javax.swing.JComboBox<String> Departure_Box;
-    private javax.swing.JTable FlightTable;
+    private javax.swing.JList<String> FlightTable;
     private javax.swing.JComboBox<String> Month;
     private javax.swing.JButton Search_But;
     private javax.swing.JComboBox<String> Year;
@@ -290,7 +340,7 @@ public class FlightSearch extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton returnFromSearch;
     // End of variables declaration//GEN-END:variables
 }

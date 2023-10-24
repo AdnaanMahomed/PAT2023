@@ -285,33 +285,23 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                   <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="313" max="32767" attributes="0"/>
+                  <EmptySpace pref="327" max="32767" attributes="0"/>
                   <Component id="AdminControl_but" min="-2" pref="205" max="-2" attributes="0"/>
               </Group>
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="jLabel7" min="-2" pref="504" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="202" max="-2" attributes="0"/>
+                          <Component id="jLabel7" min="-2" pref="482" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="307" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="FlightBookBut" min="-2" pref="248" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="410" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="416" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-              </Group>
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="jLabel9" min="-2" pref="34" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="392" max="-2" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel11" max="32767" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -319,21 +309,17 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="90" max="-2" attributes="0"/>
+                      <Component id="AdminControl_but" min="-2" pref="67" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                           <Component id="jLabel8" min="-2" pref="60" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="AdminControl_but" min="-2" pref="67" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel7" min="-2" pref="333" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                  <Component id="jLabel7" min="-2" pref="366" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
                   <Component id="FlightBookBut" min="-2" pref="69" max="-2" attributes="0"/>
-                  <EmptySpace pref="142" max="32767" attributes="0"/>
-                  <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-                  <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace pref="156" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -354,7 +340,7 @@
         <Component class="javax.swing.JLabel" name="jLabel7">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/UI/planelogo.jpg"/>
+              <Image iconType="3" name="/images/planelogo.jpg"/>
             </Property>
           </Properties>
         </Component>
@@ -369,7 +355,8 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="0" red="0" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="book new flight"/>
+            <Property name="text" type="java.lang.String" value="Book new flight"/>
+            <Property name="actionCommand" type="java.lang.String" value="Book new flight"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="FlightBookButActionPerformed"/>
@@ -391,16 +378,6 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AdminControl_butActionPerformed"/>
           </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel9">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel9"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel11">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel11"/>
-          </Properties>
         </Component>
       </SubComponents>
     </Container>

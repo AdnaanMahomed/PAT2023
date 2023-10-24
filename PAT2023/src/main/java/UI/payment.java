@@ -4,6 +4,16 @@
  */
 package UI;
 
+import Backend.Paymentback;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+
+
 /**
  *
  * @author Adnaa
@@ -49,6 +59,11 @@ public class payment extends javax.swing.JFrame {
         payBut.setBackground(new java.awt.Color(204, 204, 255));
         payBut.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         payBut.setText("pay");
+        payBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                payButActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel3.setText("total price:");
@@ -136,6 +151,32 @@ public class payment extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void payButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payButActionPerformed
+        try {
+            File Fli = new File("data//Booked .txt");
+            Scanner scFile = new Scanner(Fli);
+            FileWriter FliWrite = new FileWriter(Fli, true);
+            
+            double Xcoord = scFile.nextInt() ;
+            double Xcoord2 = scFile.nextInt();
+            double Ycoord = scFile.nextInt();
+            double Ycoord2 = scFile.nextInt();
+            int cass = scFile.nextInt();
+            String departure = scFile.next();
+            String arrival = scFile.next();
+            
+            
+            
+            
+            
+            Double total = Paymentback.PricClac(Xcoord, Xcoord2, Ycoord, Ycoord, cass, departure, arrival);
+            
+            PriceArea.setText(total + "");
+        } catch (IOException ex) {
+            Logger.getLogger(payment.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_payButActionPerformed
 
     /**
      * @param args the command line arguments

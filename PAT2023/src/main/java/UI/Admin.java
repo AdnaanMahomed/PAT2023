@@ -8,12 +8,18 @@ package UI;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import Backend.AdminBack;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.util.Scanner;
 
 /**
  *
  * @author Adnaa
  */
 public class Admin extends javax.swing.JFrame {
+    
     
 
     /**
@@ -96,6 +102,11 @@ public class Admin extends javax.swing.JFrame {
         jScrollPane1.setViewportView(Airport_List);
 
         RemoveAirport.setText("remove selected item");
+        RemoveAirport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RemoveAirportActionPerformed(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
@@ -216,6 +227,11 @@ public class Admin extends javax.swing.JFrame {
         jScrollPane3.setViewportView(AircraftList);
 
         AddAircraft.setText("add");
+        AddAircraft.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddAircraftActionPerformed(evt);
+            }
+        });
 
         editAircraft.setText("edit selected flight");
         editAircraft.addActionListener(new java.awt.event.ActionListener() {
@@ -312,17 +328,30 @@ public class Admin extends javax.swing.JFrame {
         jLabel5.setText("edit or add flight to the database");
 
         DepartureBox.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        DepartureBox.setForeground(new java.awt.Color(0, 0, 0));
 
         arrivalBox.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        arrivalBox.setForeground(new java.awt.Color(0, 0, 0));
 
         aircraftBox.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        aircraftBox.setForeground(new java.awt.Color(0, 0, 0));
 
         flightadd.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         flightadd.setText("add ");
+        flightadd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                flightaddActionPerformed(evt);
+            }
+        });
 
         jScrollPane2.setViewportView(flightList);
 
         editFlight.setText("edit selected ");
+        editFlight.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editFlightActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -407,17 +436,84 @@ public class Admin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void editAircraftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editAircraftActionPerformed
-        // TODO add your handling code here:
+        try {
+            String name = AirtcraftName_Input.getText();
+            int speed = Integer.parseInt(Speed_Input.getText());
+            
+            File Fli = new File("data//Aircraft.txt");
+            FileWriter fliWrite = new FileWriter(Fli, true);
+            Scanner scFli = new Scanner(Fli);
+            
+            String aircraft = AdminBack.EditAircraft(name, speed);
+            String newAircraft = AdminBack.AddAircraft(name, speed);
+            
+            while (scFli.hasNext()) {
+                
+                String bean = scFli.next();
+               
+                
+                
+                
+                if (scFli.next().equals(aircraft)) {
+                    String other = scFli.next();
+                    
+                }
+                fliWrite.write(bean);
+                 
+                
+            }  
+            fliWrite.write(newAircraft);
+            
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_editAircraftActionPerformed
 
     private void AddAirportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddAirportActionPerformed
-       
-       
-        String name = Airport_Input.getSelectedText();
-        String country = country_Input.getSelectedText();
-        int Xcoord = Integer.parseInt( X_Input.getText());
-        int Ycoord = Integer.parseInt( Y_Input.getText());
         
+        
+        
+        
+    FileWriter fliWrite = null;
+        try {
+            String name = Airport_Input.getText();
+            String country = country_Input.getText();
+            int Xcoord = Integer.parseInt( X_Input.getText());
+            int Ycoord = Integer.parseInt( Y_Input.getText());
+            File Fli = new File("data//Airports.txt");
+            fliWrite = new FileWriter(Fli, true);
+            String airport = AdminBack.AddAirp(name, country, Xcoord, Ycoord);
+            fliWrite.write(airport);
+            
+           
+            
+            File air = new File("data//Airports.txt");
+            Scanner scFli = new Scanner(air).useDelimiter("#");
+            
+            
+            
+            
+               
+            DepartureBox.addItem(name);
+            arrivalBox.addItem(name);
+            
+           
+            
+            
+            
+               
+           
+        } catch (IOException ex) {
+            Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                fliWrite.close();
+            } catch (IOException ex) {
+                Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+       
         
         
         
@@ -425,39 +521,206 @@ public class Admin extends javax.swing.JFrame {
         
     }//GEN-LAST:event_AddAirportActionPerformed
 
+    private void AddAircraftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddAircraftActionPerformed
+        FileWriter fliWrite = null;
+        try {
+            String name = AirtcraftName_Input.getText();
+            int speed = Integer.parseInt(Speed_Input.getText());
+            File Fli = new File("data//Aircraft.txt");
+            fliWrite = new FileWriter(Fli, true);
+            String aircraft = AdminBack.AddAircraft(name, speed);
+            fliWrite.write(aircraft);
+            AircraftList.add(aircraft, AircraftList);
+            File plane = new File("data//Aircraft.txt");
+            Scanner scpln = new Scanner(plane).useDelimiter("#");
+            String omne = name + "" + speed;
+            while (scpln.hasNext()) { 
+              
+              aircraftBox.addItem(omne);
+            
+            }    
+        } catch (IOException ex) {
+            Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                fliWrite.close();
+            } catch (IOException ex) {
+                Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+       
+       
+        
+    }//GEN-LAST:event_AddAircraftActionPerformed
+
+    private void RemoveAirportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoveAirportActionPerformed
+      
+        
+      try {                                           
+             
+             
+             
+             
+             String name = Airport_Input.getText();
+             String country = country_Input.getText();
+             int Xcoord = Integer.parseInt( X_Input.getText());
+             int Ycoord = Integer.parseInt( Y_Input.getText());
+             
+             
+             File Fli = new File("data//Airports.txt");
+             Scanner scFli = new Scanner(Fli).useDelimiter("#");
+             FileWriter fliWrite = new FileWriter(Fli, true);
+             
+             String newAirp = AdminBack.AddAirp(name, country, Xcoord, Ycoord);
+             String Airp = AdminBack.EditAirp(name, country, Xcoord, Ycoord);
+             
+             
+             while (scFli.hasNext()) {  
+                
+                
+                String bean = scFli.next();
+               
+                
+                
+                
+                if (scFli.next().equals(Airp)) {
+                    String other = scFli.next();
+                    
+                }
+                fliWrite.write(bean);
+                 
+                
+            
+            fliWrite.write(newAirp);
+             
+        }
+             
+             
+             
+             
+             
+             
+             
+         }  catch (IOException ex) {
+            Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
+      
+         }
+  
+      
+    }//GEN-LAST:event_RemoveAirportActionPerformed
+
+    private void flightaddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_flightaddActionPerformed
+       try {
+            String departure = DepartureBox.getSelectedItem() + "";
+            String arrival = arrivalBox.getSelectedItem() + "";
+            String aircraft = AircraftList.getSelectedValue();
+            
+            File fli = new File("data//Flights.txt");
+            
+            Scanner scFli = new Scanner(fli).useDelimiter("#");
+            
+            FileWriter FliWrite = new FileWriter(fli, true);
+            
+            String flight = AdminBack.AddFlight(departure, arrival, aircraft);
+            
+            FliWrite.write(flight);
+                   
+            while (scFli.hasNext()) { 
+               
+               String omne = departure + "" + arrival + "" + aircraft;
+               DepartureBox.addItem(omne);
+               arrivalBox.addItem(omne);
+            }    
+           
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+       
+    }//GEN-LAST:event_flightaddActionPerformed
+
+    private void editFlightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editFlightActionPerformed
+        try {
+            String departure = DepartureBox.getSelectedItem() + "";
+            String arrival = arrivalBox.getSelectedItem() + "";
+            String aircraft = AircraftList.getSelectedValue();
+            
+            File fli = new File("data//Flights.txt");
+            Scanner scFli = new Scanner(fli).useDelimiter("#");
+            FileWriter FliWrite = new FileWriter(fli, true);
+            
+            String flight = Backend.AdminBack.EditFlight(departure, arrival, aircraft);
+            String newflight = Backend.AdminBack.AddFlight(departure, arrival, aircraft);
+            
+             while (scFli.hasNext()) {  
+                
+                
+                String bean = scFli.next();
+               
+                
+                
+                
+                if (scFli.next().equals(flight)) {
+                    String other = scFli.next();
+                    
+                }
+                FliWrite.write(bean);
+                 
+                
+            
+            FliWrite.write(newflight);
+             
+        }
+        
+        } catch (IOException ex) {
+            Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+      
+    }//GEN-LAST:event_editFlightActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Admin().setVisible(true);
+        
+            
+            
+            
+            /* Set the Nimbus look and feel */
+            //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+            /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+            * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+            */
+            try {
+                for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                    if ("Nimbus".equals(info.getName())) {
+                        javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                        break;
+                    }
+                }
+            } catch (ClassNotFoundException ex) {
+                java.util.logging.Logger.getLogger(Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            } catch (InstantiationException ex) {
+                java.util.logging.Logger.getLogger(Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                java.util.logging.Logger.getLogger(Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+                java.util.logging.Logger.getLogger(Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
             }
-        });
+            //</editor-fold>
+            
+            /* Create and display the form */
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    new Admin().setVisible(true);
+                }
+            });
+       
+        //</editor-fold>
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
